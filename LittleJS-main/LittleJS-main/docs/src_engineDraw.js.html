@@ -1,0 +1,1131 @@
+<!DOCTYPE html><html lang="en" style="font-size:16px"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="./static/favicon.png"><meta name="description" content="LittleJS is a lightweight HTML5 game engine with fast WebGL rendering, physics, particles, sound, and more!"><meta name="keywords" content="javascript, game engine, html5, webgl, 2d, game development, indie games"><meta name="author" content="Frank Force"><meta property="og:title" content="LittleJS - The Tiny JavaScript Game Engine"><meta property="og:description" content="Lightweight HTML5 game engine with WebGL rendering, physics, and sound"><meta property="og:type" content="website"><title>Source: src/engineDraw.js</title><!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]--><script src="scripts/third-party/hljs.js" defer="defer"></script><script src="scripts/third-party/hljs-line-num.js" defer="defer"></script><script src="scripts/third-party/popper.js" defer="defer"></script><script src="scripts/third-party/tippy.js" defer="defer"></script><script src="scripts/third-party/tocbot.min.js"></script><script>var baseURL="/",locationPathname="";baseURL=(baseURL=(baseURL="https://killedbyapixel.github.io/LittleJS/docs/").replace(/https?:\/\//i,"")).substr(baseURL.indexOf("/"))</script><link rel="stylesheet" href="styles/clean-jsdoc-theme.min.css"><svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><defs><symbol id="copy-icon" viewbox="0 0 488.3 488.3"><g><path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/><path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/></g></symbol><symbol id="search-icon" viewBox="0 0 512 512"><g><g><path d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z"/></g></g><g><g><path d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z"/></g></g></symbol><symbol id="font-size-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11.246 15H4.754l-2 5H.6L7 4h2l6.4 16h-2.154l-2-5zm-.8-2L8 6.885 5.554 13h4.892zM21 12.535V12h2v8h-2v-.535a4 4 0 1 1 0-6.93zM19 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></symbol><symbol id="add-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol><symbol id="minus-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M5 11h14v2H5z"/></symbol><symbol id="dark-theme-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol><symbol id="light-theme-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol><symbol id="reset-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M18.537 19.567A9.961 9.961 0 0 1 12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 2.136-.67 4.116-1.81 5.74L17 12h3a8 8 0 1 0-2.46 5.772l.997 1.795z"/></symbol><symbol id="down-icon" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"></path></symbol><symbol id="codepen-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M16.5 13.202L13 15.535v3.596L19.197 15 16.5 13.202zM14.697 12L12 10.202 9.303 12 12 13.798 14.697 12zM20 10.869L18.303 12 20 13.131V10.87zM19.197 9L13 4.869v3.596l3.5 2.333L19.197 9zM7.5 10.798L11 8.465V4.869L4.803 9 7.5 10.798zM4.803 15L11 19.131v-3.596l-3.5-2.333L4.803 15zM4 13.131L5.697 12 4 10.869v2.262zM2 9a1 1 0 0 1 .445-.832l9-6a1 1 0 0 1 1.11 0l9 6A1 1 0 0 1 22 9v6a1 1 0 0 1-.445.832l-9 6a1 1 0 0 1-1.11 0l-9-6A1 1 0 0 1 2 15V9z"/></symbol><symbol id="close-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></symbol><symbol id="menu-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/></symbol></defs></svg></head><body data-theme="dark"><div class="sidebar-container"><div class="sidebar" id="sidebar"><a href="/" class="sidebar-title sidebar-title-anchor">LittleJS - The Tiny JavaScript Game Engine That Can!</a><div class="sidebar-items-container"><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-classes"><div>Classes</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="Audio.Sound.html">Sound</a></div><div class="sidebar-section-children"><a href="Audio.SoundInstance.html">SoundInstance</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dDistanceJoint.html">Box2dDistanceJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dFrictionJoint.html">Box2dFrictionJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dGearJoint.html">Box2dGearJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dJoint.html">Box2dJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dKiematicObject.html">Box2dKiematicObject</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dMotorJoint.html">Box2dMotorJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dObject.html">Box2dObject</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPinJoint.html">Box2dPinJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPlugin.html">Box2dPlugin</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPrismaticJoint.html">Box2dPrismaticJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPulleyJoint.html">Box2dPulleyJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dRevoluteJoint.html">Box2dRevoluteJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dRopeJoint.html">Box2dRopeJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dStaticObject.html">Box2dStaticObject</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dTargetJoint.html">Box2dTargetJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dWeldJoint.html">Box2dWeldJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dWheelJoint.html">Box2dWheelJoint</a></div><div class="sidebar-section-children"><a href="Box2dRaycastResult.html">Box2dRaycastResult</a></div><div class="sidebar-section-children"><a href="Draw.FontImage.html">FontImage</a></div><div class="sidebar-section-children"><a href="Draw.TextureInfo.html">TextureInfo</a></div><div class="sidebar-section-children"><a href="Draw.TileInfo.html">TileInfo</a></div><div class="sidebar-section-children"><a href="Engine.Color.html">Color</a></div><div class="sidebar-section-children"><a href="Engine.EngineObject.html">EngineObject</a></div><div class="sidebar-section-children"><a href="Engine.Particle.html">Particle</a></div><div class="sidebar-section-children"><a href="Engine.ParticleEmitter.html">ParticleEmitter</a></div><div class="sidebar-section-children"><a href="Engine.RandomGenerator.html">RandomGenerator</a></div><div class="sidebar-section-children"><a href="Engine.Timer.html">Timer</a></div><div class="sidebar-section-children"><a href="Engine.Vector2.html">Vector2</a></div><div class="sidebar-section-children"><a href="Medals.Medal.html">Medal</a></div><div class="sidebar-section-children"><a href="Newgrounds.NewgroundsMedal.html">NewgroundsMedal</a></div><div class="sidebar-section-children"><a href="Newgrounds.NewgroundsPlugin.html">NewgroundsPlugin</a></div><div class="sidebar-section-children"><a href="PostProcess.PostProcessPlugin.html">PostProcessPlugin</a></div><div class="sidebar-section-children"><a href="TileLayers.Box2dTileLayer.html">Box2dTileLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.CanvasLayer.html">CanvasLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.TileCollisionLayer.html">TileCollisionLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.TileLayer.html">TileLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.TileLayerData.html">TileLayerData</a></div><div class="sidebar-section-children"><a href="UISystem.UIButton.html">UIButton</a></div><div class="sidebar-section-children"><a href="UISystem.UICheckbox.html">UICheckbox</a></div><div class="sidebar-section-children"><a href="UISystem.UIObject.html">UIObject</a></div><div class="sidebar-section-children"><a href="UISystem.UIScrollbar.html">UIScrollbar</a></div><div class="sidebar-section-children"><a href="UISystem.UISystemPlugin.html">UISystemPlugin</a></div><div class="sidebar-section-children"><a href="UISystem.UIText.html">UIText</a></div><div class="sidebar-section-children"><a href="UISystem.UITile.html">UITile</a></div><div class="sidebar-section-children"><a href="UISystem.UIVideo.html">UIVideo</a></div><div class="sidebar-section-children"><a href="ZzFXM.ZzFXMusic.html">ZzFXMusic</a></div></div><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-namespaces"><div>Namespaces</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="Audio.html">Audio</a></div><div class="sidebar-section-children"><a href="Box2D.html">Box2D</a></div><div class="sidebar-section-children"><a href="Debug.html">Debug</a></div><div class="sidebar-section-children"><a href="Draw.html">Draw</a></div><div class="sidebar-section-children"><a href="DrawUtilities.html">DrawUtilities</a></div><div class="sidebar-section-children"><a href="Engine.html">Engine</a></div><div class="sidebar-section-children"><a href="Input.html">Input</a></div><div class="sidebar-section-children"><a href="Math.html">Math</a></div><div class="sidebar-section-children"><a href="Medals.html">Medals</a></div><div class="sidebar-section-children"><a href="Newgrounds.html">Newgrounds</a></div><div class="sidebar-section-children"><a href="PostProcess.html">PostProcess</a></div><div class="sidebar-section-children"><a href="Random.html">Random</a></div><div class="sidebar-section-children"><a href="Settings.html">Settings</a></div><div class="sidebar-section-children"><a href="TileLayers.html">TileLayers</a></div><div class="sidebar-section-children"><a href="UISystem.html">UISystem</a></div><div class="sidebar-section-children"><a href="Utilities.html">Utilities</a></div><div class="sidebar-section-children"><a href="WebGL.html">WebGL</a></div><div class="sidebar-section-children"><a href="ZzFXM.html">ZzFXM</a></div></div></div></div></div><div class="navbar-container" id="VuAckcnZhf"><nav class="navbar"><div class="navbar-left-items"><div class="navbar-item"><a id="" href="https://github.com/KilledByAPixel/LittleJS" target="_blank">GitHub</a></div><div class="navbar-item"><a id="" href="https://killedbyapixel.github.io/LittleJS/examples/" target="_blank">Examples</a></div><div class="navbar-item"><a id="" href="https://github.com/KilledByAPixel/LittleJS/blob/main/FAQ.md" target="_blank">FAQ</a></div></div><div class="navbar-right-items"><div class="navbar-right-item"><button class="icon-button search-button" aria-label="open-search"><svg><use xlink:href="#search-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button theme-toggle" aria-label="toggle-theme"><svg><use class="theme-svg-use" xlink:href="#light-theme-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button font-size" aria-label="change-font-size"><svg><use xlink:href="#font-size-icon"></use></svg></button></div></div><nav></nav></nav></div><div class="toc-container"><div class="toc-content"><span class="bold">On this page</span><div id="eed4d2a0bfd64539bb9df78095dec881"></div></div></div><div class="body-wrapper"><div class="main-content"><div class="main-wrapper"><section id="source-page" class="source-page"><header><h1 id="title" class="has-anchor">src_engineDraw.js</h1></header><article><pre class="prettyprint source lang-js"><code>/**
+ * LittleJS Drawing System
+ * - Hybrid system with both Canvas2D and WebGL available
+ * - Super fast tile sheet rendering with WebGL
+ * - Can apply rotation, mirror, color and additive color
+ * - Font rendering system with built in engine font
+ * - Many useful utility functions
+ *
+ * LittleJS uses a hybrid rendering solution with the best of both Canvas2D and WebGL.
+ * There are 3 canvas/contexts available to draw to...
+ * mainCanvas - 2D background canvas, non WebGL stuff like tile layers are drawn here.
+ * glCanvas - Used by the accelerated WebGL batch rendering system.
+ *
+ * The WebGL rendering system is very fast with some caveats...
+ * - Switching blend modes (additive) or textures causes another draw call which is expensive in excess
+ * - Group additive rendering together using renderOrder to mitigate this issue
+ *
+ * The LittleJS rendering solution is intentionally simple, feel free to adjust it for your needs!
+ * @namespace Draw
+ */
+
+'use strict';
+
+/** The primary 2D canvas visible to the user
+ *  @type {HTMLCanvasElement}
+ *  @memberof Draw */
+let mainCanvas;
+
+/** 2d context for mainCanvas
+ *  @type {CanvasRenderingContext2D}
+ *  @memberof Draw */
+let mainContext;
+
+/** The default 2d context to use for drawing, usually mainContext
+ *  @type {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D}
+ *  @memberof Draw */
+let drawContext;
+
+/** Offscreen canvas that can be used for image processing
+ *  @type {OffscreenCanvas}
+ *  @memberof Draw */
+let workCanvas;
+
+/** Offscreen canvas that can be used for image processing
+ *  @type {OffscreenCanvasRenderingContext2D}
+ *  @memberof Draw */
+let workContext;
+
+/** Offscreen canvas with willReadFrequently that can be used for image processing
+ *  @type {OffscreenCanvas}
+ *  @memberof Draw */
+let workReadCanvas;
+
+/** Offscreen canvas with willReadFrequently that can be used for image processing
+ *  @type {OffscreenCanvasRenderingContext2D}
+ *  @memberof Draw */
+let workReadContext;
+
+/** The size of the main canvas (and other secondary canvases)
+ *  @type {Vector2}
+ *  @memberof Draw */
+let mainCanvasSize = vec2();
+
+/** Array containing texture info for batch rendering system
+ *  @type {Array&lt;TextureInfo>}
+ *  @memberof Draw */
+let textureInfos = [];
+
+/** Keeps track of how many draw calls there were each frame for debugging
+ *  @type {number}
+ *  @memberof Draw */
+let drawCount;
+
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Create a tile info object using a grid based system
+ * - This can take vecs or floats for easier use and conversion
+ * - If an index is passed in, the tile size and index will determine the position
+ * @param {Vector2|number} [index=0] - Index of the tile in 1d or 2d form
+ * @param {Vector2|number} [size] - Size of tile in pixels
+ * @param {TextureInfo|number} [texture] - Texture index or info to use
+ * @param {number} [padding] - How many pixels padding around tiles
+ * @param {number} [bleed] - How many pixels smaller to draw tiles
+ * @return {TileInfo}
+ * @example
+ * tile(2)                       // a tile at index 2 using the default tile size of 16
+ * tile(5, 8)                    // a tile at index 5 using a tile size of 8
+ * tile(1, 16, 3)                // a tile at index 1 of size 16 on texture 3
+ * tile(vec2(4,8), vec2(30,10))  // a tile at index (4,8) with a size of (30,10)
+ * @memberof Draw */
+function tile(index=new Vector2, size=tileDefaultSize, texture=0, padding=tileDefaultPadding, bleed=tileDefaultBleed)
+{
+    ASSERT(isVector2(index) || typeof index === 'number', 'index must be a vec2 or number');
+    ASSERT(isVector2(size) || typeof size === 'number', 'size must be a vec2 or number');
+    ASSERT(isNumber(texture) || texture instanceof TextureInfo, 'texture must be a number or TextureInfo');
+    ASSERT(isNumber(padding), 'padding must be a number');
+
+    if (headlessMode) return new TileInfo;
+
+    if (typeof size === 'number')
+    {
+        // if size is a number, make it a vector
+        ASSERT(size > 0);
+        size = new Vector2(size, size);
+    }
+
+    // create tile info object
+    const textureInfo = typeof texture === 'number' ?
+        textureInfos[texture] : texture;
+
+    // get the position of the tile
+    const sizePaddedX = size.x + padding*2;
+    const sizePaddedY = size.y + padding*2;
+    let x, y;
+    if (typeof index === 'number')
+    {
+        const cols = textureInfo.size.x / sizePaddedX |0;
+        x = index % cols;
+        y = index / cols |0;
+    }
+    else
+    {
+        x = index.x;
+        y = index.y;
+    }
+    const pos = new Vector2(x*sizePaddedX + padding, y*sizePaddedY + padding);
+    return new TileInfo(pos, size, textureInfo, padding, bleed);
+}
+
+/**
+ * Tile Info - Stores info about how to draw a tile
+ * @memberof Draw
+ */
+class TileInfo
+{
+    /** Create a tile info object
+     *  @param {Vector2} [pos=vec2()] - Top left corner of tile in pixels
+     *  @param {Vector2} [size] - Size of tile in pixels
+     *  @param {TextureInfo} [textureInfo] - Texture info to use
+     *  @param {number} [padding] - How many pixels padding around tiles
+     *  @param {number} [bleed] - How many pixels smaller to draw tiles
+     */
+    constructor(pos=vec2(), size=tileDefaultSize, textureInfo=textureInfos[0], padding=tileDefaultPadding, bleed=tileDefaultBleed)
+    {
+        /** @property {Vector2} - Top left corner of tile in pixels */
+        this.pos = pos.copy();
+        /** @property {Vector2} - Size of tile in pixels */
+        this.size = size.copy();
+        /** @property {number} - How many pixels padding around tiles */
+        this.padding = padding;
+        /** @property {TextureInfo} - The texture info for this tile */
+        this.textureInfo = textureInfo;
+        /** @property {number} - Shrinks tile by this many pixels to prevent neighbors bleeding */
+        this.bleed = bleed;
+    }
+
+    /** Returns a copy of this tile offset by a vector
+    *  @param {Vector2} offset - Offset to apply in pixels
+    *  @return {TileInfo}
+    */
+    offset(offset)
+    { return new TileInfo(this.pos.add(offset), this.size, this.textureInfo, this.padding, this.bleed); }
+
+    /** Returns a copy of this tile offset by a number of animation frames
+    *  @param {number} frame - Offset to apply in animation frames
+    *  @return {TileInfo}
+    */
+    frame(frame)
+    {
+        ASSERT(typeof frame === 'number');
+        const w = this.size.x + this.padding*2;
+        const x = frame*w;
+        ASSERT(x &lt; this.textureInfo.size.x, 'frame extends beyond texture width!');
+        return this.offset(new Vector2(x));
+    }
+
+    /**
+     * Set this tile to use a full image in a texture info
+     * @param {TextureInfo} [textureInfo]
+     * @return {TileInfo}
+     */
+    setFullImage(textureInfo=this.textureInfo)
+    {
+        this.textureInfo = textureInfo;
+        this.pos = new Vector2;
+        this.size = textureInfo.size.copy();
+        this.bleed = this.padding = 0;
+        return this;
+    }
+
+    /**
+     * Returns a tile info for an index using this tile as refrence
+     * @param {Vector2|number} [index=0]
+     * @return {TileInfo}
+     */
+    tile(index)
+    { return tile(index, this.size, this.textureInfo, this.padding, this.bleed); }
+}
+
+/**
+ * Tile Info - Stores info about each texture
+ * @memberof Draw
+ */
+class TextureInfo
+{
+    /**
+     * Create a TextureInfo, called automatically by the engine
+     * @param {HTMLImageElement|OffscreenCanvas} image
+     * @param {boolean} [useWebGL] - Should use WebGL if available?
+     */
+    constructor(image, useWebGL=true)
+    {
+        /** @property {HTMLImageElement|OffscreenCanvas} - image source */
+        this.image = image;
+        /** @property {Vector2} - size of the image */
+        this.size = image ? vec2(image.width, image.height) : vec2();
+        /** @property {Vector2} - inverse of the size, cached for rendering */
+        this.sizeInverse = image ? vec2(1/image.width, 1/image.height) : vec2();
+        /** @property {WebGLTexture} - WebGL texture */
+        this.glTexture = undefined;
+        useWebGL &amp;&amp; this.createWebGLTexture();
+    }
+
+    /** Creates the WebGL texture, updates if already created */
+    createWebGLTexture() { glRegisterTextureInfo(this); }
+
+    /** Destroys the WebGL texture */
+    destroyWebGLTexture() { glUnregisterTextureInfo(this); }
+
+    /** Check if the texture is webgl enabled
+     * @return {boolean} */
+    hasWebGL() { return !!this.glTexture; }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Drawing functions
+
+/** Draw textured tile centered in world space
+ *  @param {Vector2}  pos - Center of the tile in world space
+ *  @param {Vector2}  [size=vec2(1)] - Size of the tile in world space
+ *  @param {TileInfo} [tileInfo] - Tile info to use, untextured if undefined
+ *  @param {Color}    [color=WHITE] - Color to modulate with
+ *  @param {number}   [angle] - Angle to rotate by
+ *  @param {boolean}  [mirror] - Is image flipped along the Y axis?
+ *  @param {Color}    [additiveColor] - Additive color to be applied if any
+ *  @param {boolean}  [useWebGL=glEnable] - Use accelerated WebGL rendering?
+ *  @param {boolean}  [screenSpace=false] - Are the pos and size are in screen space?
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context] - Canvas 2D context to draw to
+ *  @memberof Draw */
+function drawTile(pos, size=vec2(1), tileInfo, color=WHITE,
+    angle=0, mirror, additiveColor, useWebGL=glEnable, screenSpace, context)
+{
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isVector2(size), 'size must be a vec2');
+    ASSERT(isColor(color), 'color is invalid');
+    ASSERT(isNumber(angle), 'angle must be a number');
+    ASSERT(!additiveColor || isColor(additiveColor), 'additiveColor must be a color');
+    ASSERT(!context || !useWebGL, 'context only supported in canvas 2D mode');
+
+    const textureInfo = tileInfo?.textureInfo;
+    const bleed = tileInfo?.bleed ?? 0;
+    if (useWebGL &amp;&amp; glEnable)
+    {
+        ASSERT(!!glContext, 'WebGL is not enabled!');
+        if (screenSpace)
+            [pos, size, angle] = screenToWorldTransform(pos, size, angle);
+        if (textureInfo)
+        {
+            // calculate uvs and render
+            const sizeInverse = textureInfo.sizeInverse;
+            const x = tileInfo.pos.x * sizeInverse.x;
+            const y = tileInfo.pos.y * sizeInverse.y;
+            const w = tileInfo.size.x * sizeInverse.x;
+            const h = tileInfo.size.y * sizeInverse.y;
+            glSetTexture(textureInfo.glTexture);
+            if (bleed)
+            {
+                const bleedX = sizeInverse.x*bleed;
+                const bleedY = sizeInverse.y*bleed;
+                glDraw(pos.x, pos.y, mirror ? -size.x : size.x, size.y, angle,
+                    x + bleedX,     y + bleedY,
+                    x - bleedX + w, y - bleedY + h,
+                    color.rgbaInt(), additiveColor &amp;&amp; additiveColor.rgbaInt());
+            }
+            else
+            {
+                glDraw(pos.x, pos.y, mirror ? -size.x : size.x, size.y, angle,
+                    x, y, x + w, y + h,
+                    color.rgbaInt(), additiveColor &amp;&amp; additiveColor.rgbaInt());
+            }
+        }
+        else
+        {
+            // if no tile info, force untextured
+            glDraw(pos.x, pos.y, size.x, size.y, angle, 0, 0, 0, 0, 0, color.rgbaInt());
+        }
+    }
+    else
+    {
+        // normal canvas 2D rendering method (slower)
+        ++drawCount;
+        size = new Vector2(size.x, -size.y); // flip upside down sprites
+        drawCanvas2D(pos, size, angle, mirror, (context)=>
+        {
+            if (textureInfo)
+            {
+                // calculate uvs and render
+                const x = tileInfo.pos.x,  y = tileInfo.pos.y;
+                const w = tileInfo.size.x, h = tileInfo.size.y;
+                drawImageColor(context, textureInfo.image, x, y, w, h, -.5, -.5, 1, 1, color, additiveColor, bleed);
+            }
+            else
+            {
+                // if no tile info, use untextured rect
+                const c = additiveColor ? color.add(additiveColor) : color;
+                context.fillStyle = c.toString();
+                context.fillRect(-.5, -.5, 1, 1);
+            }
+        }, screenSpace, context);
+    }
+}
+
+/** Draw colored rect centered on pos
+ *  @param {Vector2} pos
+ *  @param {Vector2} [size=vec2(1)]
+ *  @param {Color}   [color=WHITE]
+ *  @param {number}  [angle]
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawRect(pos, size, color, angle, useWebGL, screenSpace, context)
+{
+    drawTile(pos, size, undefined, color, angle, false, undefined, useWebGL, screenSpace, context);
+}
+
+/** Draw a rect centered on pos with a gradient from top to bottom
+ *  @param {Vector2} pos
+ *  @param {Vector2} [size=vec2(1)]
+ *  @param {Color}   [colorTop=WHITE]
+ *  @param {Color}   [colorBottom=BLACK]
+ *  @param {number}  [angle]
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawRectGradient(pos, size, colorTop=WHITE, colorBottom=BLACK, angle=0, useWebGL=glEnable, screenSpace=false, context)
+{
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isVector2(size), 'size must be a vec2');
+    ASSERT(isColor(colorTop) &amp;&amp; isColor(colorBottom), 'color is invalid');
+    ASSERT(isNumber(angle), 'angle must be a number');
+    ASSERT(!context || !useWebGL, 'context only supported in canvas 2D mode');
+
+    if (useWebGL &amp;&amp; glEnable)
+    {
+        ASSERT(!!glContext, 'WebGL is not enabled!');
+        if (screenSpace)
+        {
+            // convert to world space
+            pos = screenToWorld(pos);
+            size = size.scale(1/cameraScale);
+            angle += cameraAngle;
+        }
+        // build 4 corner points for the rectangle
+        const points = [], colors = [];
+        const halfSizeX = size.x/2, halfSizeY = size.y/2;
+        const colorTopInt = colorTop.rgbaInt();
+        const colorBottomInt = colorBottom.rgbaInt();
+        const c = cos(-angle), s = sin(-angle);
+        for (let i=4; i--;)
+        {
+            const x = i &amp; 1 ? halfSizeX : -halfSizeX;
+            const y = i &amp; 2 ? halfSizeY : -halfSizeY;
+            const rx = x * c - y * s;
+            const ry = x * s + y * c;
+            const color = i &amp; 2 ? colorTopInt : colorBottomInt;
+            points.push(vec2(pos.x + rx, pos.y + ry));
+            colors.push(color);
+        }
+        glDrawColoredPoints(points, colors);
+    }
+    else
+    {
+        // normal canvas 2D rendering method (slower)
+        ++drawCount;
+        size = new Vector2(size.x, -size.y); // fix upside down sprites
+        drawCanvas2D(pos, size, angle, false, (context)=>
+        {
+            // if no tile info, use untextured rect
+            const gradient = context.createLinearGradient(0, -.5, 0, .5);
+            gradient.addColorStop(0, colorTop.toString());
+            gradient.addColorStop(1, colorBottom.toString());
+            context.fillStyle = gradient;
+            context.fillRect(-.5, -.5, 1, 1);
+        }, screenSpace, context);
+    }
+}
+
+/** Draw connected lines between a series of points
+ *  @param {Array&lt;Vector2>} points
+ *  @param {number}  [width]
+ *  @param {Color}   [color=WHITE]
+ *  @param {boolean} [wrap] - Should the last point connect to the first?
+ *  @param {Vector2} [pos=vec2()] - Offset to apply
+ *  @param {number}  [angle] - Angle to rotate by
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawLineList(points, width=.1, color, wrap=false, pos=vec2(), angle=0, useWebGL=glEnable, screenSpace, context)
+{
+    ASSERT(isArray(points), 'points must be an array');
+    ASSERT(isNumber(width), 'width must be a number');
+    ASSERT(isColor(color), 'color is invalid');
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isNumber(angle), 'angle must be a number');
+    ASSERT(!context || !useWebGL, 'context only supported in canvas 2D mode');
+
+    if (useWebGL &amp;&amp; glEnable)
+    {
+        ASSERT(!!glContext, 'WebGL is not enabled!');
+        let size = vec2(1);
+        if (screenSpace)
+            [pos, size, angle] = screenToWorldTransform(pos, size, angle);
+        glDrawOutlineTransform(points, color.rgbaInt(), width, pos.x, pos.y, size.x, size.y, angle, wrap);
+    }
+    else
+    {
+        // normal canvas 2D rendering method (slower)
+        ++drawCount;
+        drawCanvas2D(pos, vec2(1), angle, false, (context)=>
+        {
+            context.strokeStyle = color.toString();
+            context.lineWidth = width;
+            context.beginPath();
+            for (let i=0; i&lt;points.length; ++i)
+            {
+                const point = points[i];
+                context.lineTo(point.x, point.y);
+            }
+            wrap &amp;&amp; context.closePath();
+            context.stroke();
+        }, screenSpace, context);
+    }
+}
+
+/** Draw colored line between two points
+ *  @param {Vector2} posA
+ *  @param {Vector2} posB
+ *  @param {number}  [width]
+ *  @param {Color}   [color=WHITE]
+ *  @param {Vector2} [pos=vec2()] - Offset to apply
+ *  @param {number}  [angle] - Angle to rotate by
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawLine(posA, posB, width=.1, color, pos=vec2(), angle=0, useWebGL, screenSpace, context)
+{
+    const halfDelta = vec2((posB.x - posA.x)/2, (posB.y - posA.y)/2);
+    const size = vec2(width, halfDelta.length()*2);
+    pos = pos.add(posA.add(halfDelta));
+    if (screenSpace)
+        halfDelta.y *= -1;  // flip angle Y if screen space
+    angle += halfDelta.angle();
+    drawRect(pos, size, color, angle, useWebGL, screenSpace, context);
+}
+
+/** Draw colored regular polygon using passed in number of sides
+ *  @param {Vector2} pos
+ *  @param {Vector2} [size=vec2(1)]
+ *  @param {number}  [sides]
+ *  @param {Color}   [color=WHITE]
+ *  @param {number}  [angle]
+ *  @param {number}  [lineWidth]
+ *  @param {Color}   [lineColor=BLACK]
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawRegularPoly(pos, size=vec2(1), sides=3, color=WHITE, lineWidth=0, lineColor=BLACK, angle=0, useWebGL=glEnable, screenSpace=false, context)
+{
+    ASSERT(isVector2(size), 'size must be a vec2');
+    ASSERT(isNumber(sides), 'sides must be a number');
+
+    // build regular polygon points
+    const points = [];
+    const sizeX = size.x/2, sizeY = size.y/2;
+    for (let i=sides; i--;)
+    {
+        const a = (i/sides)*PI*2;
+        points.push(vec2(sin(a)*sizeX, cos(a)*sizeY));
+    }
+    drawPoly(points, color, lineWidth, lineColor, pos, angle, useWebGL, screenSpace, context);
+}
+
+/** Draw colored polygon using passed in points
+ *  @param {Array&lt;Vector2>} points - Array of Vector2 points
+ *  @param {Color}   [color=WHITE]
+ *  @param {number}  [lineWidth]
+ *  @param {Color}   [lineColor=BLACK]
+ *  @param {Vector2} [pos=vec2()] - Offset to apply
+ *  @param {number}  [angle] - Angle to rotate by
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawPoly(points, color=WHITE, lineWidth=0, lineColor=BLACK, pos=vec2(), angle=0, useWebGL=glEnable, screenSpace=false, context=undefined)
+{
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isArray(points), 'points must be an array');
+    ASSERT(isColor(color) &amp;&amp; isColor(lineColor), 'color is invalid');
+    ASSERT(isNumber(lineWidth), 'lineWidth must be a number');
+    ASSERT(isNumber(angle), 'angle must be a number');
+    ASSERT(!context || !useWebGL, 'context only supported in canvas 2D mode');
+
+    if (useWebGL &amp;&amp; glEnable)
+    {
+        ASSERT(!!glContext, 'WebGL is not enabled!');
+        let size = vec2(1);
+        if (screenSpace)
+            [pos, size, angle] = screenToWorldTransform(pos, size, angle);
+        glDrawPointsTransform(points, color.rgbaInt(), pos.x, pos.y, size.x, size.y, angle);
+        if (lineWidth > 0)
+            glDrawOutlineTransform(points, lineColor.rgbaInt(), lineWidth, pos.x, pos.y, size.x, size.y, angle);
+    }
+    else
+    {
+        drawCanvas2D(pos, vec2(1), angle, false, context=>
+        {
+            context.fillStyle = color.toString();
+            context.beginPath();
+            for (const point of points)
+                context.lineTo(point.x, point.y);
+            context.closePath();
+            context.fill();
+            if (lineWidth)
+            {
+                context.strokeStyle = lineColor.toString();
+                context.lineWidth = lineWidth;
+                context.stroke();
+            }
+        }, screenSpace, context);
+    }
+}
+
+/** Draw colored ellipse using passed in point
+ *  @param {Vector2} pos
+ *  @param {Vector2} [size=vec2(1)] - Width and height diameter
+ *  @param {Color}   [color=WHITE]
+ *  @param {number}  [angle]
+ *  @param {number}  [lineWidth]
+ *  @param {Color}   [lineColor=BLACK]
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawEllipse(pos, size=vec2(1), color=WHITE, angle=0, lineWidth=0, lineColor=BLACK, useWebGL=glEnable, screenSpace=false, context)
+{
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isVector2(size), 'size must be a vec2');
+    ASSERT(isColor(color) &amp;&amp; isColor(lineColor), 'color is invalid');
+    ASSERT(isNumber(angle), 'angle must be a number');
+    ASSERT(isNumber(lineWidth), 'lineWidth must be a number');
+    ASSERT(lineWidth >= 0, 'lineWidth must be a positive value or 0');
+    ASSERT(!context || !useWebGL, 'context only supported in canvas 2D mode');
+
+    // clamp line width to prevent artifacts
+    lineWidth = clamp(lineWidth, 0, Math.min(size.x, size.y));
+
+    if (useWebGL &amp;&amp; glEnable)
+    {
+        // draw as a regular polygon
+        const sides = glCircleSides;
+        drawRegularPoly(pos, size, sides, color, lineWidth, lineColor, angle, useWebGL, screenSpace, context);
+    }
+    else
+    {
+        drawCanvas2D(pos, vec2(1), angle, false, context=>
+        {
+            context.fillStyle = color.toString();
+            context.beginPath();
+            context.ellipse(0, 0, size.x/2, size.y/2, 0, 0, 9);
+            context.fill();
+            if (lineWidth)
+            {
+                context.strokeStyle = lineColor.toString();
+                context.lineWidth = lineWidth;
+                context.stroke();
+            }
+        }, screenSpace, context);
+    }
+}
+
+/** Draw colored circle using passed in point
+ *  @param {Vector2} pos
+ *  @param {number}  [size=1] - Diameter
+ *  @param {Color}   [color=WHITE]
+ *  @param {number}  [lineWidth=0]
+ *  @param {Color}   [lineColor=BLACK]
+ *  @param {boolean} [useWebGL=glEnable]
+ *  @param {boolean} [screenSpace]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function drawCircle(pos, size=1, color=WHITE, lineWidth=0, lineColor=BLACK, useWebGL=glEnable, screenSpace=false, context)
+{
+    ASSERT(isNumber(size), 'size must be a number');
+    drawEllipse(pos, vec2(size), color, 0, lineWidth, lineColor, useWebGL, screenSpace, context);
+}
+
+/**
+ * @callback Canvas2DDrawFunction - A function that draws to a 2D canvas context
+ * @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} context
+ * @memberof Draw
+ */
+
+/** Draw directly to a 2d canvas context in world space
+ *  @param {Vector2}  pos
+ *  @param {Vector2}  size
+ *  @param {number}   angle
+ *  @param {boolean}  [mirror]
+ *  @param {Canvas2DDrawFunction} [drawFunction]
+ *  @param {boolean}  [screenSpace=false]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context=drawContext]
+ *  @memberof Draw */
+function drawCanvas2D(pos, size, angle=0, mirror=false, drawFunction, screenSpace=false, context=drawContext)
+{
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isVector2(size), 'size must be a vec2');
+    ASSERT(isNumber(angle), 'angle must be a number');
+    ASSERT(typeof drawFunction === 'function', 'drawFunction must be a function');
+
+    if (!screenSpace)
+    {
+        pos = worldToScreen(pos);
+        size = size.scale(cameraScale);
+        angle -= cameraAngle;
+    }
+    context.save();
+    context.translate(pos.x+.5, pos.y+.5);
+    context.rotate(angle);
+    context.scale(mirror ? -size.x : size.x, -size.y);
+    drawFunction(context);
+    context.restore();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Text Drawing Functions
+
+/** Draw text on main canvas in world space
+ *  Automatically splits new lines into rows
+ *  @param {string|number}  text
+ *  @param {Vector2} pos
+ *  @param {number}  [size]
+ *  @param {Color}   [color=WHITE]
+ *  @param {number}  [lineWidth]
+ *  @param {Color}   [lineColor=BLACK]
+ *  @param {CanvasTextAlign}  [textAlign='center']
+ *  @param {string}  [font=fontDefault]
+ *  @param {string}  [fontStyle]
+ *  @param {number}  [maxWidth]
+ *  @param {number}  [angle]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context=drawContext]
+ *  @memberof Draw */
+function drawText(text, pos, size=1, color, lineWidth=0, lineColor, textAlign, font, fontStyle, maxWidth, angle=0, context=drawContext)
+{
+    // convert to screen space
+    pos = worldToScreen(pos);
+    size *= cameraScale;
+    lineWidth *= cameraScale;
+    angle -= cameraAngle;
+    angle *= -1;
+
+    drawTextScreen(text, pos, size, color, lineWidth, lineColor, textAlign, font, fontStyle, maxWidth, angle, context);
+}
+
+/** Draw text in screen space
+ *  Automatically splits new lines into rows
+ *  @param {string|number}  text
+ *  @param {Vector2} pos
+ *  @param {number}  size
+ *  @param {Color}   [color=WHITE]
+ *  @param {number}  [lineWidth]
+ *  @param {Color}   [lineColor=BLACK]
+ *  @param {CanvasTextAlign}  [textAlign]
+ *  @param {string}  [font=fontDefault]
+ *  @param {string}  [fontStyle]
+ *  @param {number}  [maxWidth]
+ *  @param {number}  [angle]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context=drawContext]
+ *  @memberof Draw */
+function drawTextScreen(text, pos, size, color=WHITE, lineWidth=0, lineColor=BLACK, textAlign='center', font=fontDefault, fontStyle='', maxWidth, angle=0, context=drawContext)
+{
+    ASSERT(isString(text), 'text must be a string');
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isNumber(size), 'size must be a number');
+    ASSERT(isColor(color), 'color must be a color');
+    ASSERT(isNumber(lineWidth), 'lineWidth must be a number');
+    ASSERT(isColor(lineColor), 'lineColor must be a color');
+    ASSERT(['left','center','right'].includes(textAlign), 'align must be left, center, or right');
+    ASSERT(isString(font), 'font must be a string');
+    ASSERT(isString(fontStyle), 'fontStyle must be a string');
+    ASSERT(isNumber(angle), 'angle must be a number');
+    
+    context.fillStyle = color.toString();
+    context.strokeStyle = lineColor.toString();
+    context.lineWidth = lineWidth;
+    context.textAlign = textAlign;
+    context.font = fontStyle + ' ' + size + 'px '+ font;
+    context.textBaseline = 'middle';
+
+    const lines = (text+'').split('\n');
+    const posY = pos.y - (lines.length-1) * size/2; // center vertically
+    context.save();
+    context.translate(pos.x, posY);
+    context.rotate(-angle);
+    let yOffset = 0;
+    lines.forEach(line=>
+    {
+        lineWidth &amp;&amp; context.strokeText(line, 0, yOffset, maxWidth);
+        context.fillText(line, 0, yOffset, maxWidth);
+        yOffset += size;
+    });
+    context.restore();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Drawing utilities
+
+/** Convert from screen to world space coordinates
+ *  @param {Vector2} screenPos
+ *  @return {Vector2}
+ *  @memberof Draw */
+function screenToWorld(screenPos)
+{
+    ASSERT(isVector2(screenPos), 'screenPos must be a vec2');
+
+    let x = (screenPos.x - mainCanvasSize.x/2 + .5) /  cameraScale;
+    let y = (screenPos.y - mainCanvasSize.y/2 + .5) / -cameraScale;
+    if (cameraAngle)
+    {
+        // apply camera rotation
+        const c = cos(-cameraAngle), s = sin(-cameraAngle);
+        const xr = x * c - y * s, yr = x * s + y * c;
+        x = xr; y = yr;
+    }
+    return new Vector2(x + cameraPos.x, y + cameraPos.y);
+}
+
+/** Convert from world to screen space coordinates
+ *  @param {Vector2} worldPos
+ *  @return {Vector2}
+ *  @memberof Draw */
+function worldToScreen(worldPos)
+{
+    ASSERT(isVector2(worldPos), 'worldPos must be a vec2');
+
+    let x = worldPos.x - cameraPos.x;
+    let y = worldPos.y - cameraPos.y;
+    if (cameraAngle)
+    {
+        // apply inverse camera rotation
+        const c = cos(cameraAngle), s = sin(cameraAngle);
+        const xr = x * c - y * s, yr = x * s + y * c;
+        x = xr; y = yr;
+    }
+    return new Vector2
+    (
+        x *  cameraScale + mainCanvasSize.x/2 - .5,
+        y * -cameraScale + mainCanvasSize.y/2 - .5
+    );
+}
+
+/** Convert from screen to world space coordinates for a directional vector (no translation)
+ *  @param {Vector2} screenDelta
+ *  @return {Vector2}
+ *  @memberof Draw */
+function screenToWorldDelta(screenDelta)
+{
+    ASSERT(isVector2(screenDelta), 'screenDelta must be a vec2');
+
+    let x = screenDelta.x /  cameraScale;
+    let y = screenDelta.y / -cameraScale;
+    if (cameraAngle)
+    {
+        // apply camera rotation
+        const c = cos(-cameraAngle), s = sin(-cameraAngle);
+        const xr = x * c - y * s, yr = x * s + y * c;
+        x = xr; y = yr;
+    }
+    return new Vector2(x, y);
+}
+
+/** Convert from screen to world space coordinates for a directional vector (no translation)
+ *  @param {Vector2} worldDelta
+ *  @return {Vector2}
+ *  @memberof Draw */
+function worldToScreenDelta(worldDelta)
+{
+    ASSERT(isVector2(worldDelta), 'worldDelta must be a vec2');
+
+    let x = worldDelta.x;
+    let y = worldDelta.y;
+    if (cameraAngle)
+    {
+        // apply inverse camera rotation
+        const c = cos(cameraAngle), s = sin(cameraAngle);
+        const xr = x * c - y * s, yr = x * s + y * c;
+        x = xr; y = yr;
+    }
+    return new Vector2(x *  cameraScale, y * -cameraScale);
+}
+
+/** Convert screen space transform to world space
+ *  @param {Vector2} screenPos
+ *  @param {Vector2} screenSize
+ *  @param {number} [screenAngle]
+ *  @return {[Vector2, Vector2, number]} - [pos, size, angle]
+ *  @memberof Draw */
+function screenToWorldTransform(screenPos, screenSize, screenAngle=0)
+{
+    ASSERT(isVector2(screenPos), 'screenPos must be a vec2');
+    ASSERT(isVector2(screenSize), 'screenSize must be a vec2');
+    ASSERT(isNumber(screenAngle), 'screenAngle must be a number');
+
+    return [
+        screenToWorld(screenPos),
+        screenSize.scale(1/cameraScale),
+        screenAngle + cameraAngle
+    ];
+}
+
+/** Get the size of the camera window in world space
+ *  @return {Vector2}
+ *  @memberof Draw */
+function getCameraSize() { return mainCanvasSize.scale(1/cameraScale); }
+
+/** Check if a box, point, or circle is on screen with a circle test
+ *  If size is a Vector2, uses the length as diameter
+ *  This can be used to cull offscreen objects from render or update
+ *  @param {Vector2} pos - world space position
+ *  @param {Vector2|number} size - world space size or diameter
+ *  @return {boolean}
+ *  @memberof Draw */
+function isOnScreen(pos, size=0)
+{
+    ASSERT(isVector2(pos), 'pos must be a vec2');
+    ASSERT(isVector2(size) || isNumber(size), 'size must be a vec2 or number');
+
+    // optimized circle on screen test
+    // pos = worldToScreen(pos);
+    let x = pos.x - cameraPos.x;
+    let y = pos.y - cameraPos.y;
+    if (cameraAngle)
+    {
+        // apply inverse camera rotation
+        const c = cos(cameraAngle), s = sin(cameraAngle);
+        const xr = x * c - y * s, yr = x * s + y * c;
+        x = xr; y = yr;
+    }
+    x *= cameraScale*2; y *= -cameraScale*2;
+
+    if (size instanceof Vector2)
+        size = size.length(); // use length of vector as diameter
+    size *= cameraScale;
+
+    // check against screen bounds
+    const w = mainCanvasSize.x, h = mainCanvasSize.y;
+    return x + size > -w &amp;&amp; x - size &lt; w &amp;&amp;
+           y + size > -h &amp;&amp; y - size &lt; h;
+}
+
+/** Enable normal or additive blend mode
+ *  @param {boolean} [additive]
+ *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+ *  @memberof Draw */
+function setBlendMode(additive=false, context=drawContext)
+{
+    glAdditive = additive;
+    context.globalCompositeOperation = additive ? 'lighter' : 'source-over';
+}
+
+/** Combines LittleJS canvases onto the main canvas
+ *  This is necessary for things like screenshots and video
+ *  @memberof Draw */
+function combineCanvases()
+{
+    const w = mainCanvasSize.x, h = mainCanvasSize.y;
+    workCanvas.width = w;
+    workCanvas.height = h;
+    workContext.fillRect(0,0,w,h); // remove background alpha
+    glCopyToContext(workContext);
+    workContext.drawImage(mainCanvas, 0, 0);
+    mainContext.drawImage(workCanvas, 0, 0);
+}
+
+/** Helper function to draw an image with color and additive color applied
+ *  This is slower then normal drawImage when color is applied
+    *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} context
+    *  @param {HTMLImageElement|OffscreenCanvas} image
+    *  @param {number} sx
+    *  @param {number} sy
+    *  @param {number} sWidth
+    *  @param {number} sHeight
+    *  @param {number} dx
+    *  @param {number} dy
+    *  @param {number} dWidth
+    *  @param {number} dHeight
+    *  @param {Color} color
+    *  @param {Color} [additiveColor]
+    *  @param {number} [bleed] - How many pixels to shrink the source, used to fix bleeding
+ *  @memberof Draw */
+function drawImageColor(context, image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight, color, additiveColor, bleed=0)
+{
+    function isWhite(c) { return c.r >= 1 &amp;&amp; c.g >= 1 &amp;&amp; c.b >= 1; }
+    function isBlack(c) { return c.r &lt;= 0 &amp;&amp; c.g &lt;= 0 &amp;&amp; c.b &lt;= 0 &amp;&amp; c.a &lt;= 0; }
+    const sx2 = bleed;
+    const sy2 = bleed;
+    sWidth  = max(1,sWidth|0);
+    sHeight = max(1,sHeight|0);
+    const sWidth2  = sWidth  - 2*bleed;
+    const sHeight2 = sHeight - 2*bleed;
+    if (!canvasColorTiles || (additiveColor ? isWhite(color.add(additiveColor)) &amp;&amp; additiveColor.a &lt;= 0 : isWhite(color)))
+    {
+        // white texture with no additive alpha, no need to tint
+        context.globalAlpha = color.a;
+        context.drawImage(image, sx+sx2, sy+sy2, sWidth2, sHeight2, dx, dy, dWidth, dHeight);
+        context.globalAlpha = 1;
+    }
+    else
+    {
+        // copy to offscreen canvas
+        workReadCanvas.width = sWidth;
+        workReadCanvas.height = sHeight;
+        workReadContext.drawImage(image, sx|0, sy|0, sWidth, sHeight, 0, 0, sWidth, sHeight);
+
+        // tint image using offscreen work context
+        const imageData = workReadContext.getImageData(0, 0, sWidth, sHeight);
+        const data = imageData.data;
+        if (additiveColor &amp;&amp; !isBlack(additiveColor))
+        {
+            // slower path with additive color
+            const colorMultiply = [color.r, color.g, color.b, color.a];
+            const colorAdd = [additiveColor.r * 255, additiveColor.g * 255, additiveColor.b * 255, additiveColor.a * 255];
+            for (let i = 0; i &lt; data.length; ++i)
+                data[i] = data[i] * colorMultiply[i&amp;3] + colorAdd[i&amp;3] |0;
+            workReadContext.putImageData(imageData, 0, 0);
+            context.drawImage(workReadCanvas, sx2, sy2, sWidth2, sHeight2, dx, dy, dWidth, dHeight);
+        }
+        else
+        {
+            // faster path with no additive color
+            for (let i = 0; i &lt; data.length; i+=4)
+            {
+                data[i  ] *= color.r;
+                data[i+1] *= color.g;
+                data[i+2] *= color.b;
+            }
+            workReadContext.putImageData(imageData, 0, 0);
+            context.globalAlpha = color.a;
+            context.drawImage(workReadCanvas, sx2, sy2, sWidth2, sHeight2, dx, dy, dWidth, dHeight);
+            context.globalAlpha = 1;
+        }
+    }
+}
+
+
+/** Returns true if fullscreen mode is active
+ *  @return {boolean}
+ *  @memberof Draw */
+function isFullscreen() { return !!document.fullscreenElement; }
+
+/** Toggle fullscreen mode
+ *  @memberof Draw */
+function toggleFullscreen()
+{
+    const rootElement = mainCanvas.parentElement;
+    if (isFullscreen())
+    {
+        if (document.exitFullscreen)
+            document.exitFullscreen();
+    }
+    else if (rootElement.requestFullscreen)
+        rootElement.requestFullscreen();
+}
+
+/** Set the cursor style
+ *  @param {string}  [cursorStyle] - CSS cursor style (auto, none, crosshair, etc)
+ *  @memberof Draw */
+function setCursor(cursorStyle = 'auto')
+{
+    const rootElement = mainCanvas.parentElement;
+    rootElement.style.cursor = cursorStyle;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+/** Engine font image, 8x8 font provided by the engine
+ *  @type {FontImage}
+ *  @memberof Draw */
+let engineFontImage;
+
+/**
+ * Font Image Object - Draw text by using tiles in an image
+ * - 96 characters (from space to tilde) are stored in an image
+ * - A 8x8 default engine font is supplied for general use
+ * - This system is WebGL enabled for fast text rendering
+ * - Fonts can also be colored and scaled along each axis
+ * 
+ * @memberof Draw
+ * @example
+ * // use built in font
+ * const font = engineFontImage;
+ *
+ * // draw text
+ * font.drawTextScreen('LittleJS\nHello World!', vec2(200, 50));
+ */
+class FontImage
+{
+    /** Create an image font
+     *  @param {TileInfo} tileInfo - Tile info of first characeter in font
+     */
+    constructor(tileInfo)
+    {
+        ASSERT(!!tileInfo, 'tileInfo is required for FontImage');
+        
+        /** @property {TileInfo} - Tile info for the font */
+        this.tileInfo = tileInfo.frame(0);
+    }
+
+    /** Draw text in world space using the image font
+     *  @param {string|number} text
+     *  @param {Vector2} pos
+     *  @param {Vector2|number} [size]
+     *  @param {boolean} [center=true]
+     *  @param {Color} [color=WHITE]
+     *  @param {boolean} [useWebGL=glEnable]
+     *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context] 
+     */
+    drawText(text, pos, size=1, center, color, useWebGL, context)
+    {
+        ASSERT(isVector2(size) || typeof size === 'number', 'size must be a vec2 or number');
+
+        if (typeof size === 'number')
+        {
+            // if size is a number, make it a vector
+            ASSERT(size > 0);
+            size *= cameraScale;
+            size = new Vector2(size, size);
+        }
+        else
+            size = size.scale(cameraScale);
+        this.drawTextScreen(text, worldToScreen(pos), size, center, color, useWebGL, context);
+    }
+
+    /** Draw text in screen space using the image font
+     *  @param {string|number} text
+     *  @param {Vector2} pos
+     *  @param {Vector2|number} size
+     *  @param {boolean} [center]
+     *  @param {Color} [color=WHITE]
+     *  @param {boolean} [useWebGL=glEnable]
+     *  @param {CanvasRenderingContext2D|OffscreenCanvasRenderingContext2D} [context]
+     */
+    drawTextScreen(text, pos, size, center=true, color=WHITE, useWebGL=glEnable, context)
+    {
+        ASSERT(isString(text), 'text must be a string');
+        ASSERT(isVector2(pos), 'pos must be a vec2');
+        ASSERT(isVector2(size) || typeof size === 'number', 'size must be a vec2 or number');
+        ASSERT(isColor(color), 'color must be a color');
+
+        // if size is a number, make it a vector
+        size = typeof size === 'number' ? new Vector2(size, size) : size;
+
+        // precache objects for drawing
+        const drawPos = new Vector2;
+        const tileInfo = this.tileInfo;
+        const padding = tileInfo.padding;
+        const sizePaddedX = tileInfo.size.x + padding*2;
+        const sizePaddedY = tileInfo.size.y + padding*2;
+        const cols = tileInfo.textureInfo.size.x / sizePaddedX |0;
+
+        // draw each line of text
+        (text+'').split('\n').forEach((line, j)=>
+        {
+            const centerOffset = center ? (line.length-1) * size.x / 2 : 0;
+            for (let i=line.length; i--;)
+            {
+                // get the character index
+                const charCode = line.charCodeAt(i);
+                const index = charCode &lt; 32 || charCode > 127 ?
+                    95 : charCode - 32; // handle out of range characters
+
+                // get the position of the tile
+                const x = index % cols;
+                const y = index / cols |0;
+                tileInfo.pos.x = x*sizePaddedX + padding;
+                tileInfo.pos.y = y*sizePaddedY + padding;
+
+                // draw the tile
+                drawPos.x = pos.x + i * size.x - centerOffset |0;
+                drawPos.y = pos.y + j * size.y |0;
+                drawTile(drawPos, size, tileInfo, color, 0, false, undefined, useWebGL, true, context);
+            }
+        });
+    }
+}
+
+// load engine font, called automatically on startup
+function fontImageInit()
+{
+    return new Promise(resolve =>
+    {
+        // create the engine font
+        const image = new Image;
+        image.onerror = image.onload = ()=>
+        {
+            const tilePos=vec2(), tileSize=vec2(8), padding=1, bleed=0;
+            const textureInfo = new TextureInfo(image);
+            const tileInfo = new TileInfo(tilePos, tileSize, textureInfo, padding, bleed);
+            engineFontImage = new FontImage(tileInfo);
+            resolve();
+        }
+        image.crossOrigin = 'anonymous';
+        image.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAAeAQMAAABnrVXaAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAjpJREFUOMu9kzFu2zAUhn+CAROgqrk+B2l0BWYxMjlXeYaAtFtbdA1sGgHqRQfI0CNkSG5AwYB0BQ8d5Bsomwah6CPVeGg6tEPzAxLwyI+P78cP4u9lNO9OoMKnLMOobG5020/yaj/MrRcCGh1gBbyiLTPJEYaIiom5KM9Jq7KgynMGtb6L4GL4MF2H4LQKCXTvDVw2I4MsgZT7QLExdiutH+D08VOP3INXRrWX1/mmpbkNgAPYRVANb4xpcegYvhiNbIXauQICEjBuYLfMakaakWQeXxiZ0VDtuJCKs3ztMV59QtsHJNcRxDzfdL21ty3PrfIcXTN+E+GFAv6T5nbT9jd50/WFxb5ksdAv49qS6ouymG66ji08UMT6moykYLAo+V0j23GN4m829ZySAD5K7QsBfQTvOG8eE+gTeGYRAmnNAubN3hf5Zv9tJWDHp/VTuaSm7SN4fyINQqaNO3RMVxvpSPXnOChnRNvFcGY0gnwiPswYwTKVPE0zVtX3mTEIOoFzaqLrGuJaV+Uqumb71fVk/VoOH3cdLNQP/FHi8hV0CQNoqBZsUPlLPMsdCJro9QAaQQ0woDy9BJm0eTxCFnO9srcYlhNVlfR2EyTrph1uUtbUtAJifwRgrKuYdXVHeb0YI3QpawohQHkloI3J5FuVwI5ORxC9k2Tuz9Ir1IjgeIPGMHYkAZe2RuYkmWFmt3gGbTPOmBUWVTmRmHtGrfpzG/yuQNOKa6gBB/WA9khitPgl6/GP+gl2Af6tCbvaygAAAABJRU5ErkJggg==';
+    });
+}</code></pre></article></section><footer class="footer" id="PeOAagUepe"><div class="wrapper"><a href="https://github.com/KilledByAPixel/LittleJS">LittleJS - MIT License - Copyright 2021 Frank Force</a></div></footer></div></div></div><div class="search-container" id="PkfLWpAbet" style="display:none"><div class="wrapper" id="iCxFxjkHbP"><button class="icon-button search-close-button" id="VjLlGakifb" aria-label="close search"><svg><use xlink:href="#close-icon"></use></svg></button><div class="search-box-c"><svg><use xlink:href="#search-icon"></use></svg> <input type="text" id="vpcKVYIppa" class="search-input" placeholder="Search..." autofocus></div><div class="search-result-c" id="fWwVHRuDuN"><span class="search-result-c-text">Type anything to view search result</span></div></div></div><div class="mobile-menu-icon-container"><button class="icon-button" id="mobile-menu" data-isopen="false" aria-label="menu"><svg><use xlink:href="#menu-icon"></use></svg></button></div><div id="mobile-sidebar" class="mobile-sidebar-container"><div class="mobile-sidebar-wrapper"><a href="/" class="sidebar-title sidebar-title-anchor">LittleJS - The Tiny JavaScript Game Engine That Can!</a><div class="mobile-nav-links"><div class="navbar-item"><a id="" href="https://github.com/KilledByAPixel/LittleJS" target="_blank">GitHub</a></div><div class="navbar-item"><a id="" href="https://killedbyapixel.github.io/LittleJS/examples/" target="_blank">Examples</a></div><div class="navbar-item"><a id="" href="https://github.com/KilledByAPixel/LittleJS/blob/main/FAQ.md" target="_blank">FAQ</a></div></div><div class="mobile-sidebar-items-c"><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-classes"><div>Classes</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="Audio.Sound.html">Sound</a></div><div class="sidebar-section-children"><a href="Audio.SoundInstance.html">SoundInstance</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dDistanceJoint.html">Box2dDistanceJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dFrictionJoint.html">Box2dFrictionJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dGearJoint.html">Box2dGearJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dJoint.html">Box2dJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dKiematicObject.html">Box2dKiematicObject</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dMotorJoint.html">Box2dMotorJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dObject.html">Box2dObject</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPinJoint.html">Box2dPinJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPlugin.html">Box2dPlugin</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPrismaticJoint.html">Box2dPrismaticJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dPulleyJoint.html">Box2dPulleyJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dRevoluteJoint.html">Box2dRevoluteJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dRopeJoint.html">Box2dRopeJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dStaticObject.html">Box2dStaticObject</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dTargetJoint.html">Box2dTargetJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dWeldJoint.html">Box2dWeldJoint</a></div><div class="sidebar-section-children"><a href="Box2D.Box2dWheelJoint.html">Box2dWheelJoint</a></div><div class="sidebar-section-children"><a href="Box2dRaycastResult.html">Box2dRaycastResult</a></div><div class="sidebar-section-children"><a href="Draw.FontImage.html">FontImage</a></div><div class="sidebar-section-children"><a href="Draw.TextureInfo.html">TextureInfo</a></div><div class="sidebar-section-children"><a href="Draw.TileInfo.html">TileInfo</a></div><div class="sidebar-section-children"><a href="Engine.Color.html">Color</a></div><div class="sidebar-section-children"><a href="Engine.EngineObject.html">EngineObject</a></div><div class="sidebar-section-children"><a href="Engine.Particle.html">Particle</a></div><div class="sidebar-section-children"><a href="Engine.ParticleEmitter.html">ParticleEmitter</a></div><div class="sidebar-section-children"><a href="Engine.RandomGenerator.html">RandomGenerator</a></div><div class="sidebar-section-children"><a href="Engine.Timer.html">Timer</a></div><div class="sidebar-section-children"><a href="Engine.Vector2.html">Vector2</a></div><div class="sidebar-section-children"><a href="Medals.Medal.html">Medal</a></div><div class="sidebar-section-children"><a href="Newgrounds.NewgroundsMedal.html">NewgroundsMedal</a></div><div class="sidebar-section-children"><a href="Newgrounds.NewgroundsPlugin.html">NewgroundsPlugin</a></div><div class="sidebar-section-children"><a href="PostProcess.PostProcessPlugin.html">PostProcessPlugin</a></div><div class="sidebar-section-children"><a href="TileLayers.Box2dTileLayer.html">Box2dTileLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.CanvasLayer.html">CanvasLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.TileCollisionLayer.html">TileCollisionLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.TileLayer.html">TileLayer</a></div><div class="sidebar-section-children"><a href="TileLayers.TileLayerData.html">TileLayerData</a></div><div class="sidebar-section-children"><a href="UISystem.UIButton.html">UIButton</a></div><div class="sidebar-section-children"><a href="UISystem.UICheckbox.html">UICheckbox</a></div><div class="sidebar-section-children"><a href="UISystem.UIObject.html">UIObject</a></div><div class="sidebar-section-children"><a href="UISystem.UIScrollbar.html">UIScrollbar</a></div><div class="sidebar-section-children"><a href="UISystem.UISystemPlugin.html">UISystemPlugin</a></div><div class="sidebar-section-children"><a href="UISystem.UIText.html">UIText</a></div><div class="sidebar-section-children"><a href="UISystem.UITile.html">UITile</a></div><div class="sidebar-section-children"><a href="UISystem.UIVideo.html">UIVideo</a></div><div class="sidebar-section-children"><a href="ZzFXM.ZzFXMusic.html">ZzFXMusic</a></div></div><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-namespaces"><div>Namespaces</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="Audio.html">Audio</a></div><div class="sidebar-section-children"><a href="Box2D.html">Box2D</a></div><div class="sidebar-section-children"><a href="Debug.html">Debug</a></div><div class="sidebar-section-children"><a href="Draw.html">Draw</a></div><div class="sidebar-section-children"><a href="DrawUtilities.html">DrawUtilities</a></div><div class="sidebar-section-children"><a href="Engine.html">Engine</a></div><div class="sidebar-section-children"><a href="Input.html">Input</a></div><div class="sidebar-section-children"><a href="Math.html">Math</a></div><div class="sidebar-section-children"><a href="Medals.html">Medals</a></div><div class="sidebar-section-children"><a href="Newgrounds.html">Newgrounds</a></div><div class="sidebar-section-children"><a href="PostProcess.html">PostProcess</a></div><div class="sidebar-section-children"><a href="Random.html">Random</a></div><div class="sidebar-section-children"><a href="Settings.html">Settings</a></div><div class="sidebar-section-children"><a href="TileLayers.html">TileLayers</a></div><div class="sidebar-section-children"><a href="UISystem.html">UISystem</a></div><div class="sidebar-section-children"><a href="Utilities.html">Utilities</a></div><div class="sidebar-section-children"><a href="WebGL.html">WebGL</a></div><div class="sidebar-section-children"><a href="ZzFXM.html">ZzFXM</a></div></div></div><div class="mobile-navbar-actions"><div class="navbar-right-item"><button class="icon-button search-button" aria-label="open-search"><svg><use xlink:href="#search-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button theme-toggle" aria-label="toggle-theme"><svg><use class="theme-svg-use" xlink:href="#light-theme-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button font-size" aria-label="change-font-size"><svg><use xlink:href="#font-size-icon"></use></svg></button></div></div></div></div><script type="text/javascript" src="scripts/core.min.js"></script><script src="scripts/search.min.js" defer="defer"></script><script src="scripts/third-party/fuse.js" defer="defer"></script><script type="text/javascript">var tocbotInstance=tocbot.init({tocSelector:"#eed4d2a0bfd64539bb9df78095dec881",contentSelector:".main-content",headingSelector:"h1, h2, h3",hasInnerContainers:!0,scrollContainer:".main-content",headingsOffset:130,onClick:bringLinkToView})</script></body></html>

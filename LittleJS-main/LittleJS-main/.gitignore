@@ -1,0 +1,10 @@
+# node files
+node_modules
+package-lock.json
+
+# example builds
+examples/starter/build
+examples/starter/*.zip
+examples/typescript/build
+examples/electron/build
+examples/electron/*win32*
